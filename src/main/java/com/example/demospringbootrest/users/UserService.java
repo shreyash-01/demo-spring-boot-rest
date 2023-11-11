@@ -37,4 +37,16 @@ public class UserService {
             return e.toString();
         }
     }
+
+    public User updateExistingUser(User user) {
+
+        for(User u : users){
+            if(u.getUserID()==user.getUserID()){
+                u.setName(user.getName());
+                u.setAge(user.getAge());
+            }
+        }
+        return user;
+
+    }
 }
