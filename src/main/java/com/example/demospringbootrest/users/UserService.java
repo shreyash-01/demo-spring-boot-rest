@@ -49,4 +49,12 @@ public class UserService {
         return user;
 
     }
+
+    public void deleteExistingUser(Integer userID) {
+        for(User u : users){
+            if(u.getUserID() == userID){
+                users.remove(u);
+            }
+        }
+    }
 }
