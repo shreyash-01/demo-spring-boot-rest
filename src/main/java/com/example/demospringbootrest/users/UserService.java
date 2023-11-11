@@ -28,4 +28,13 @@ public class UserService {
         }
         return null;
     }
+
+    public String createNewUser(User user){
+        try{
+            users.add(user);
+            return "Successful";
+        } catch (Exception e){
+            return e.toString();
+        }
+    }
 }
