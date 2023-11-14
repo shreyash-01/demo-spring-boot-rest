@@ -18,7 +18,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<User> getAllUsers(){
         return this.userService.getUsers();
     }
@@ -28,7 +28,7 @@ public class UserController {
         return userService.getUser(userID);
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public String createUser(@RequestBody User user){
         return userService.createNewUser(user);
     }
@@ -43,7 +43,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/")
+    @PutMapping("")
     public User updateUser(@RequestBody User user){
         return userService.updateExistingUser(user);
 
