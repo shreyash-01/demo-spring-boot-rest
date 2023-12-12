@@ -1,5 +1,6 @@
 package com.example.demospringbootrest.users;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -7,54 +8,31 @@ import java.util.List;
 
 @Service
 public class UserService {
-    private List<User> users;
 
-    public UserService(){
-        this.users = new ArrayList<>();
-        this.users.add(new User(100, "Shreyash", 21));
-        this.users.add(new User(101, "Shaan", 20));
-        this.users.add(new User(102, "Utkarsh", 19));
+    UserDAOImpl userDAO;
+
+    @Autowired
+    public UserService(UserDAOImpl userDAO) {
+        this.userDAO = userDAO;
     }
 
     public List<User> getUsers() {
-        return this.users;
+        return userDAO.getUsers();
     }
 
     public User getUser(Integer userID){
-        for(User user: users){
-            if(user.getUserID()==userID){
-                return user;
-            }
-        }
-        return null;
+        return userDAO.getUser(userID);
     }
 
-    public String createNewUser(User user){
-        try{
-            users.add(user);
-            return "Successful";
-        } catch (Exception e){
-            return e.toString();
-        }
+    public void createNewUser(User user){
+        userDAO.insertUser(user);
     }
 
-    public User updateExistingUser(User user) {
-
-        for(User u : users){
-            if(u.getUserID()==user.getUserID()){
-                u.setName(user.getName());
-                u.setAge(user.getAge());
-            }
-        }
-        return user;
-
+    public void updateExistingUser(User user) {
+        userDAO.updateUser(user.getUserID(), user.getName());
     }
 
     public void deleteExistingUser(Integer userID) {
-        for(User u : users){
-            if(u.getUserID() == userID){
-                users.remove(u);
-            }
-        }
+        userDAO.deleteUser(userID);
     }
 }
