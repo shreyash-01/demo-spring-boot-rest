@@ -1,7 +1,6 @@
 package com.example.demospringbootrest.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,23 +28,34 @@ public class UserController {
     }
 
     @PostMapping("")
-    public String createUser(@RequestBody User user){
-        return userService.createNewUser(user);
+    public ResponseEntity<String> createUser(@RequestBody User user){
+        try {
+            userService.createNewUser(user);
+            return new ResponseEntity<>("User Created", HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Some Error Occurred", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/{userID}")
-    public ResponseEntity<HttpEntity> deleteUser(@PathVariable Integer userID ){
+    public ResponseEntity<String> deleteUser(@PathVariable Integer userID ){
         try{
             userService.deleteExistingUser(userID);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("User Deleted", HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("")
-    public User updateUser(@RequestBody User user){
-        return userService.updateExistingUser(user);
-
+    public ResponseEntity<String> updateUser(@RequestBody User user){
+        try {
+            userService.updateExistingUser(user);
+            return new ResponseEntity<>("User Updated", HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Some Error Occurred", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
